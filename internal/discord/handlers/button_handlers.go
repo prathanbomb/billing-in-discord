@@ -711,6 +711,8 @@ func handleVerifyPaymentConfirmButton(s *discordgo.Session, i *discordgo.Interac
 			respondWithError(s, i, "ไม่สามารถอัปเดตข้อมูลหนี้สินในระบบได้")
 			return
 		}
+		CheckAndAwardBadges(s, debtorDiscordID, i.ChannelID)
+		CheckAndAwardBadges(s, creditorDiscordID, i.ChannelID)
 	}
 
 	// Respond to the creditor with confirmation

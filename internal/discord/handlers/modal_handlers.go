@@ -88,6 +88,8 @@ func handlePayDebtModalSubmit(s *discordgo.Session, i *discordgo.InteractionCrea
 			respondWithError(s, i, fmt.Sprintf("เกิดข้อผิดพลาดในการประมวลผลการชำระเงิน: %v", err))
 			return
 		}
+		CheckAndAwardBadges(s, debtorDiscordID, i.ChannelID)
+		CheckAndAwardBadges(s, creditorDiscordID, i.ChannelID)
 	} else {
 		// If payment amount closely matches unpaid total, mark those transactions as paid
 		if paymentAmount >= unpaidTotal*0.99 && paymentAmount <= unpaidTotal*1.01 {
@@ -104,6 +106,8 @@ func handlePayDebtModalSubmit(s *discordgo.Session, i *discordgo.InteractionCrea
 				respondWithError(s, i, fmt.Sprintf("เกิดข้อผิดพลาดในการประมวลผลการชำระเงิน: %v", err))
 				return
 			}
+			CheckAndAwardBadges(s, debtorDiscordID, i.ChannelID)
+			CheckAndAwardBadges(s, creditorDiscordID, i.ChannelID)
 		}
 	}
 

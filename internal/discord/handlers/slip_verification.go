@@ -164,6 +164,8 @@ func HandleSlipVerification(s *discordgo.Session, m *discordgo.MessageCreate) {
 			log.Printf("SlipVerify: Failed general debt reduction for %s to %s (%.2f): %v", debtorDiscordID, intendedPayeeDiscordID, amount, errReduce)
 			return
 		}
+		CheckAndAwardBadges(s, debtorDiscordID, m.ChannelID)
+		CheckAndAwardBadges(s, intendedPayeeDiscordID, m.ChannelID)
 		s.ChannelMessageSend(m.ChannelID, fmt.Sprintf(
 			"✅ สลิปได้รับการยืนยัน & ยอดหนี้สินจาก <@%s> ถึง <@%s> ลดลง %.2f บาท!\n- ผู้ส่ง (สลิป): %s (%s)\n- ผู้รับ (สลิป): %s (%s)\n- วันที่ (สลิป): %s\n- เลขอ้างอิง (สลิป): %s",
 			debtorDiscordID, intendedPayeeDiscordID, amount,
